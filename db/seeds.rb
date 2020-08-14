@@ -6,15 +6,27 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 User.destroy_all;
-
-# user1 = User.create({username: 'ericab', email: 'erica@gmail.com', password_digest: '1111'})
-# user2 = User.create({username: 'adelyn', email: 'adi@gmail.com', password_digest: '2222'})
-# user3 = User.create({username: 'shaan', email: 'shaan@gmail.com', password_digest: '3333'})
+List.destroy_all;
+Item.destroy_all;
 
 5.times do
+
   User.create({
     username: Faker::Name.first_name,
     email: Faker::String.random(length: 4),
     password_digest: Faker::Lorem.words
-  })
+  });
+
+  List.create({
+    title: Faker::Relationship.spouse,
+    description: Faker::String.random,
+    is_complete: Faker::Boolean.boolean
+  });
+
+  Item.create({
+    name: Faker::Name.name,
+    is_complete: Faker::Boolean.boolean
+  });
+
 end
+

@@ -5,4 +5,20 @@ class Api::V1::UsersController < ApplicationController
     render json: users
   end
 
+  def show
+    users = User.find(params[:id])
+    render json: users
+  end
+
+  def create
+    user = User.create(user_params)
+  end
+
+  private
+
+  def user_params
+    params.require(:user).permit(:username, :email, :password_digest)
+  end
+
+
 end
