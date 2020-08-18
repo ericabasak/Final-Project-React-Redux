@@ -13,19 +13,21 @@ Item.destroy_all;
 
   User.create({
     username: Faker::Name.first_name,
-    email: Faker::String.random(length: 4),
-    password_digest: Faker::Lorem.words
+    email: Faker::Internet.email,
+    password_digest: Faker::Internet.password
   });
 
   List.create({
     title: Faker::Relationship.spouse,
     description: Faker::String.random,
-    is_complete: Faker::Boolean.boolean
+    is_complete: Faker::Boolean.boolean,
+    user_id: rand(1..20)
   });
 
   Item.create({
     name: Faker::Name.name,
-    is_complete: Faker::Boolean.boolean
+    is_complete: Faker::Boolean.boolean,
+    list_id: rand(1..20)
   });
 
 end
