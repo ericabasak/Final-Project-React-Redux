@@ -12,6 +12,12 @@ class Api::V1::UsersController < ApplicationController
 
   def create
     user = User.create(user_params)
+    login!
+    if user.save
+      render json: user, status: 200
+    else
+      render json: {errors: user.errors.full_messages}
+    end
   end
 
   private
