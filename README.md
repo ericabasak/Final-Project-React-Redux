@@ -1,24 +1,19 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Welcome to Todo App!
 
-Things you may want to cover:
+Demo link: 
 
-* Ruby version
+When I was considering apps for my final Flatiron project, I wanted something practical and that I would myself. As a mother and wife, I also have 1000 things to-do in my head. What better idea than a to-do list.
 
-* System dependencies
+The backend to my Todo App can be found here:
 
-* Configuration
+The basic requirements are:
 
-* Database creation
+Ruby version:
 
-* Database initialization
+Database:
 
-* How to run the test suite
+Run rails server to start the server before running the front end.
 
-* Services (job queues, cache servers, search engines, etc.)
 
-* Deployment instructions
-
-* ...
