@@ -1,6 +1,6 @@
 require 'bcrypt'
 
-class Api::V1::UsersController < ApplicationController
+class Api::V1::UsersController < ActionController::Base
   
   def index
     users = User.all
@@ -27,7 +27,9 @@ class Api::V1::UsersController < ApplicationController
 
   def login
     user = User.find_by(username: params[:username])
-    if user && user.authenticate(params[:password])
+    if user
+      session[:user_id] = user.id
+      puts "session - #{session[:user_id]}";
       render json: user
     else
       render json: {errors: "Login failed!"}
