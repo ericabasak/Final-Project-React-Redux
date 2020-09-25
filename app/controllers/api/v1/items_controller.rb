@@ -1,9 +1,23 @@
 class Api::V1::ItemsController < ActionController::Base
   skip_before_action :verify_authenticity_token  
 
+
+  # find items for a given user
+  # item --> list --> user
+
   def index
-    items = Items.all
-    render json: items
+    user = User.find_by(username: "Erica")
+    list = List.find_by(user_id: user.id)
+    puts "--------------------------------------------"
+    puts list
+    puts "-------------------------------------------"
+    item = Item.find_by(list_id: list.id)
+    puts "-----------------------------------------"
+    puts item
+    puts "----------------------------------------"
+    tasks = Item.where(:list_id => user.id)
+    # items = Items.all
+    render json: tasks
   end
 
   def show
