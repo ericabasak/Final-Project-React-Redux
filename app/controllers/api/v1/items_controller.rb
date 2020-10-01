@@ -9,15 +9,16 @@ class Api::V1::ItemsController < ActionController::Base
     user = User.find_by(username: "Erica")
     list = List.find_by(user_id: user.id)
     puts "--------------------------------------------"
-    puts list
+    puts list.id
     puts "-------------------------------------------"
     item = Item.find_by(list_id: list.id)
     puts "-----------------------------------------"
-    puts item
+    puts item.name
     puts "----------------------------------------"
-    tasks = Item.where(:list_id => user.id)
+    items = Item.where(:list_id => list.id)
+    puts items
     # items = Items.all
-    render json: tasks
+    render json: items
   end
 
   def show
@@ -37,23 +38,34 @@ class Api::V1::ItemsController < ActionController::Base
     puts x
     puts "Erica =-----------------------------------------------------"
 
-    user = User.find_by(username: "zoey")
+    user = User.find_by(username: "Erica")
     list = List.find_by(user_id: user.id)
-    item = Item.create(name: x[:name], is_complete: x[:is_complete])
+    puts 'list id -', list.id
+    item = Item.new(name: x[:name], is_complete: x[:is_complete])
+    puts item.id
     if list.nil?
-      l = List.create(title: "", description: "", is_complete: false, user_id: user.id)
-      l.save!
-    elsif
-    # variable = value
-      item.list_id = list.id 
+      list = List.create!(title: "", description: "", is_complete: false, user_id: user.id)
     end
-    render json: user
+    item.list_id = list.id 
+    item.save!
+    render json: item
   end
 
+
+  def update
+    # look up item
+    # upate field
+    p = params.require(:item).permit(:is_complete, :id)
+    item = Item.find(params[:id])
+    item.update!(is_complete: p[:is_complete])
+    item.save!
+    render json: item
+  end
+  
   private
 
   def item_params
-    params.require(:item).permit(:name, :is_complete)
+    params.require(:item).permit(:name, :is_complete, :id)
   end
 
 end
