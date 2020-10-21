@@ -1,7 +1,5 @@
 class Api::V1::ListsController < ActionController::Base
   skip_before_action :verify_authenticity_token
-
-  # before_action :check_login
   
   def index
     user = User.find_by(username: "Erica")
@@ -15,8 +13,12 @@ class Api::V1::ListsController < ActionController::Base
   end
 
   def show
-    list = List.find(params[:id])
-    render json: list
+    id = params[:id]
+    list = List.find(id)
+    items = Item.where(list_id: id)
+    puts "*************items*********"
+    puts list
+    render json: items
   end
 
   def create
@@ -45,7 +47,7 @@ class Api::V1::ListsController < ActionController::Base
   # end
 
   def list_params
-    params.require(:list).permit(:title, :description, :is_complete)
+    params.require(:list).permit(:title, :description, :is_complete, :id)
   end
 
 end
