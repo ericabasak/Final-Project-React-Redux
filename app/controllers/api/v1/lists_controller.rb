@@ -29,8 +29,7 @@ class Api::V1::ListsController < ActionController::Base
     list = List.new(list_params)
     puts list
     puts "------------------------------------------"
-    list = List.new(title: x[:title], description: x[:description], 
-    is_complete: x[:is_complete])
+    list = List.new(title: x[:title], description: x[:description], is_complete: x[:is_complete])
     user = User.find_by(username: "Erica")
     list.user = user
     list.save!

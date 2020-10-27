@@ -33,20 +33,10 @@ class Api::V1::ItemsController < ActionController::Base
   # 5. associate item to list
   # 6. save it
   def create
-    x = item_params()
-    puts "Erica =-----------------------------------------------------"
-    puts x
-    puts "Erica =-----------------------------------------------------"
-
+    p = item_params
     user = User.find_by(username: "Erica")
     list = List.find_by(user_id: user.id)
-    puts 'list id -', list.id
-    item = Item.new(name: x[:name], is_complete: x[:is_complete])
-    puts item.id
-    if list.nil?
-      list = List.create!(title: "", description: "", is_complete: false, user_id: user.id)
-    end
-    item.list_id = list.id 
+    item = Item.new(name: p[:name], is_complete: p[:is_complete], list_id: p[:list_id])
     item.save!
     render json: item
   end
@@ -65,7 +55,7 @@ class Api::V1::ItemsController < ActionController::Base
   private
 
   def item_params
-    params.require(:item).permit(:name, :is_complete, :id)
+    params.require(:item).permit(:name, :is_complete, :list_id)
   end
 
 end
