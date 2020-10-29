@@ -41,15 +41,22 @@ class Api::V1::ItemsController < ActionController::Base
     render json: item
   end
 
-
   def update
     # look up item
     # upate field
-    p = params.require(:item).permit(:is_complete, :id)
-    item = Item.find(params[:id])
+    # p = params.require(:item).permit(:is_complete, :id)
+    p = item_params
+    item = Item.find(params[:list_id])
     item.update!(is_complete: p[:is_complete])
     item.save!
     render json: item
+  end
+  
+  def destroy
+    p = item_params
+    item = Item.find(params[:list_id])
+    item.update!(name: p[:name])
+    item.destroy
   end
   
   private
