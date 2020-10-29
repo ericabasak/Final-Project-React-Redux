@@ -53,10 +53,12 @@ class Api::V1::ItemsController < ActionController::Base
   end
   
   def destroy
-    p = item_params
-    item = Item.find(params[:list_id])
-    item.update!(name: p[:name])
-    item.destroy
+    puts "----------destroy---------------"
+    # p = item_params
+    item = Item.find(params[:id])
+    # item.update!(name: p[:name])
+    item.destroy!
+    render json: item
   end
   
   private
