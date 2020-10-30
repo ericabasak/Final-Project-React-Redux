@@ -37,6 +37,16 @@ class Api::V1::ListsController < ActionController::Base
     render json: list
   end
 
+  def update
+    puts "-----------updating list is complete-------------"
+    p = list_params
+    puts p
+    list = List.find(params[:id])
+    list.update!(is_complete: p[:is_complete])
+    list.save!
+    render json: list
+  end
+
   private
   
   # def check_login
@@ -45,8 +55,9 @@ class Api::V1::ListsController < ActionController::Base
   #   end
   # end
 
+  # params is a request from client, params is object
   def list_params
-    params.require(:list).permit(:title, :description, :is_complete, :id)
+    params.permit(:title, :description, :is_complete, :id)
   end
 
 end
