@@ -6,6 +6,15 @@ class User < ApplicationRecord
 
   has_secure_password
 
+  def user_serializer
+    {
+      username: username,
+      email: email,
+      id: id
+    }
+  end
+
+
   # include BCrypt
 
   # def password
