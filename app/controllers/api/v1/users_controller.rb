@@ -27,7 +27,7 @@ class Api::V1::UsersController < ActionController::Base
   end
 
   def login
-    user = User.find_by(username: params[:username])
+    user = User.find_by(params[:id])
     if user
       session[:user_id] = user.id
       puts "session - #{session[:user_id]}";
@@ -40,10 +40,7 @@ class Api::V1::UsersController < ActionController::Base
   private
 
   def user_params
-    params.require(:user).permit(:username, :email, :password_digest)
+    params.require(:user).permit(:username, :email, :password)
   end
 
-  # def login_params
-  #   params.require(:user).permit(:username, :password)
-  # end
 end
