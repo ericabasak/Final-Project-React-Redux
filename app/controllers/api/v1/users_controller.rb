@@ -17,7 +17,7 @@ class Api::V1::UsersController < ActionController::Base
     user = User.create(user_params)
     user.password_digest =  BCrypt::Password.create(user.password_digest)
     puts user
-    user.hello()
+    # user.hello()
 
     if user.save
       render json: user, status: 200
@@ -27,6 +27,7 @@ class Api::V1::UsersController < ActionController::Base
   end
 
   def login
+    puts "i want to login"
     user = User.find_by(params[:id])
     if user
       session[:user_id] = user.id

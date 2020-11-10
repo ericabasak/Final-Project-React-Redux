@@ -1,10 +1,8 @@
 class User < ApplicationRecord
+  has_secure_password
   has_many :lists
-
   validates :username, uniqueness: true,  presence: true
   validates :email, uniqueness: true, presence: true
-
-  has_secure_password
 
   def user_serializer
     {
