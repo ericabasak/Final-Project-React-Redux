@@ -1,33 +1,37 @@
-class ApplicationController < ActionController::API
+class ApplicationController < ActionController::Base
+  # before_action :require_login
+  skip_before_action :verify_authenticity_token
 
-  # skip_before_action :verify_authenticity_token
+  helper_method :login!, :logged_in?, :current_user, :authorized_user?, :logout!
 
-  # helper_method :login!, :logged_in?, :current_user, :authorized_user?, :logout!
-  # helper_method :logged_in?, :current_user
-
-
-  # def login!
-  #   session[:user_id] = @user.id
-  # end
-
-  def current_user
-    # @current_user ||= User.find_by(session[:user_id]) if session[:user_id]
-    @current_user ||= User.find_by(id: session[:user_id])
+  def login!
+    session[:user_id] = @user.id
   end
 
   def logged_in?
-    # !!session[:user_id]
-    !!current_user
+    !!session[:user_id]
+    # !!current_user
   end
-  
-  
 
-  # def authorized_user?
-  #    @user == current_user
-  # end
+  def current_user
+    @current_user ||= User.find_by(session[:user_id]) if session[:user_id]
+    # @current_user ||= User.find_by(id: session[:user_id])
+  end
 
-  # def logout!
-  #  session.clear
-  # end
+  def authorized_user?
+     @user == current_user
+  end
+
+  def logout!
+   session.clear
+  end
+
+# private
+
+#   def require_login
+#     unless logged_in?
+#       redirect_to create
+#     end
+#   end
 
 end

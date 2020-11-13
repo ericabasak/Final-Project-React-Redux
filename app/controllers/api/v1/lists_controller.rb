@@ -1,5 +1,6 @@
 class Api::V1::ListsController < ActionController::Base
   skip_before_action :verify_authenticity_token
+  # before_action :require_login
   
   def index
     user = User.find_by(username: "Erica")
@@ -49,11 +50,18 @@ class Api::V1::ListsController < ActionController::Base
 
   private
   
-  # def check_login
+  # def require_login
   #   if session[:user_id].nil?
-  #     redirect to login!
+  #     redirect to login
   #   end
   # end
+
+  # def require_login
+  #   unless login
+  #     redirect_to login
+  #   end
+  # end
+
 
   # params is a request from client, params is object
   def list_params

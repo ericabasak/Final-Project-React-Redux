@@ -22,7 +22,10 @@ class Api::V1::UsersController < ActionController::Base
     if user.save
       render json: user, status: 200
     else
-      render json: {errors: user.errors.full_messages}, status: 500
+      render json: {
+        status: 500,
+        errors: user.errors.full_messages
+      } 
     end
   end
 
@@ -34,7 +37,9 @@ class Api::V1::UsersController < ActionController::Base
       puts "session - #{session[:user_id]}";
       render json: user
     else
-      render json: {errors: "Login failed!"}
+      render json: {
+        errors: "Login failed!"
+      }
     end
   end
 

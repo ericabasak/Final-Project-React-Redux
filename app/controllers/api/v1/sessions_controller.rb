@@ -13,10 +13,10 @@ class Api::V1::SessionsController < ApplicationController
       }
       render json: resp
     else
-      resp = {
-        error: "Invalid credentials"
-      }
-      render json: resp
+      render json: {
+        status: 401,
+        errors: "Invalid credentials"
+        }
     end
   end
 
@@ -26,7 +26,9 @@ class Api::V1::SessionsController < ApplicationController
         user: current_user.user.serializer
       }, status: :ok
     else
-      render json: { error: "No current user"}
+      render json: { 
+        error: "No current user"
+      }
     end
   end
 
@@ -34,6 +36,7 @@ class Api::V1::SessionsController < ApplicationController
   def destroy
     session.clear
     render json: {
+      status: 200,
       message: "Successfully logged out"
     }
   end
