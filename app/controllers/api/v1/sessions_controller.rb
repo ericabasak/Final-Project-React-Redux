@@ -1,45 +1,39 @@
 class Api::V1::SessionsController < ApplicationController
   
-
   def create
     puts "----------params-------------"
     puts params
     puts "------------params------------"
-    user = User.find_by(email: params[:session][:email])
-    if user && user.authenticate(params[:session][:password])
+    session[:test] = "Session test"
+    @user = User.find_by(username: params[:username])
+  
+    # todo add user.authenticate(params[:password]) bcrypt
+    # if !@user.nil? && @user.authenticate(password)
+    if !@user.nil?
       session[:user_id] = @user.id;
-      resp = {
-        user: user.user_serializer
-      }
-      render json: resp
+      token = encode_token({user_id: @user.id})
+      render json: {user: @user, token: token}, status: 200
     else
-      render json: {
-        status: 401,
-        errors: "Invalid credentials"
-        }
+      render json: { errors: "Invalid credentials" }, status: 401
     end
   end
 
   def get_current_user
     if logged_in?
-      render json: {
-        user: current_user.user.serializer
-      }, status: :ok
+      render json: { user: current_user.user.serializer }, status: 200
     else
-      render json: { 
-        error: "No current user"
-      }
+      render json: { error: "No current user" }, status: 401
     end
   end
 
   # deletes or clears the session
   def destroy
     session.clear
-    render json: {
-      status: 200,
-      message: "Successfully logged out"
-    }
+    render json: { message: "Successfully logged out" }, status: 200
   end
+
+end
+  
 
 
   # def create
@@ -81,4 +75,3 @@ class Api::V1::SessionsController < ApplicationController
   # def session_params
   #     params.require(:user).permit(:username, :email, :password)
   # end
-end

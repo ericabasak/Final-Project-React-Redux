@@ -1,37 +1,37 @@
-class ApplicationController < ActionController::Base
-  # before_action :require_login
-  skip_before_action :verify_authenticity_token
+class ApplicationController < ActionController::API
+  def encode_token(payload)
+    JWT.encode(payload, 's3cr3t')
+  end
 
-  helper_method :login!, :logged_in?, :current_user, :authorized_user?, :logout!
+  def auth_header
+    # { Authorization: 'Bearer <token>' }
+    request.headers['Authorization']
+  end
 
-  def login!
-    session[:user_id] = @user.id
+  def decoded_token
+    if auth_header
+      token = auth_header.split(' ')[1]
+      # header: { 'Authorization': 'Bearer <token>' }
+      begin
+        JWT.decode(token, 's3cr3t', true, algorithm: 'HS256')
+      rescue JWT::DecodeError
+        nil
+      end
+    end
+  end
+
+  def logged_in_user
+    if decoded_token
+      user_id = decoded_token[0]['user_id']
+      @user = User.find_by(id: user_id)
+    end
   end
 
   def logged_in?
-    !!session[:user_id]
-    # !!current_user
+    !!logged_in_user
   end
 
-  def current_user
-    @current_user ||= User.find_by(session[:user_id]) if session[:user_id]
-    # @current_user ||= User.find_by(id: session[:user_id])
+  def authorized
+    render json: { message: 'Please log in!' }, status: :unauthorized unless logged_in?
   end
-
-  def authorized_user?
-     @user == current_user
-  end
-
-  def logout!
-   session.clear
-  end
-
-# private
-
-#   def require_login
-#     unless logged_in?
-#       redirect_to create
-#     end
-#   end
-
 end

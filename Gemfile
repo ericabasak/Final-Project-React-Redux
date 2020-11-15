@@ -17,6 +17,8 @@ gem 'puma', '~> 4.1'
 gem 'bcrypt', '~> 3.1.7'
 require 'faker'
 
+gem "jwt"
+
 gem 'active_model_serializers'
 
 # Use Active Storage variant
