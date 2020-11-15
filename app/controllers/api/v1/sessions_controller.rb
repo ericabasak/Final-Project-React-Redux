@@ -1,16 +1,19 @@
 class Api::V1::SessionsController < ApplicationController
-  
+  # skip_before_action :authorized, only: [:create]
+
   def create
     puts "----------params-------------"
     puts params
     puts "------------params------------"
-    session[:test] = "Session test"
+    # session[:test] = "Session test"
     @user = User.find_by(username: params[:username])
-  
+    puts @user
     # todo add user.authenticate(params[:password]) bcrypt
     # if !@user.nil? && @user.authenticate(password)
-    if !@user.nil?
-      session[:user_id] = @user.id;
+    # if user && user.authenticate(params[:password])
+    # if !@user.nil?
+    if @user && @user.authenticate(params[:password])
+      # session[:user_id] = @user.id;
       token = encode_token({user_id: @user.id})
       render json: {user: @user, token: token}, status: 200
     else

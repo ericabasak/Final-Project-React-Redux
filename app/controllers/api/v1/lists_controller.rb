@@ -6,9 +6,13 @@ class Api::V1::ListsController < ApplicationController
     puts session[:user_id]
     puts session[:test]
 
-    user = User.find_by(username: "Erica")
+    # user = User.find_by(username: ")
+
     # list = List.find_by(user_id: user.id)
-    lists = List.where(:user_id => user.id)
+    # @user = logged_in_user
+    puts "***************************"
+    puts @user
+    lists = List.where(:user_id => @user.id)
     # puts "--------------------------"
     # puts lists
     # puts "---------------------------"

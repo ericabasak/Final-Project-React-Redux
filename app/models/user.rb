@@ -3,6 +3,7 @@ class User < ApplicationRecord
   has_many :lists
   validates :username, uniqueness: true,  presence: true, length: { minimum: 4 }
   validates :email, uniqueness: true, presence: true
+  validates :password, presence: true
 
   def user_serializer
     {

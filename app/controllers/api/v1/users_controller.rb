@@ -15,7 +15,7 @@ class Api::V1::UsersController < ApplicationController
 
   def create
     user = User.create(user_params)
-    user.password_digest =  BCrypt::Password.create(user.password_digest)
+    # user.password_digest =  BCrypt::Password.create(user.password_digest)
     puts user
     # user.hello()
 
@@ -46,7 +46,7 @@ class Api::V1::UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:username, :email, :password)
+    params.permit(:username, :email, :password)
   end
 
 end
