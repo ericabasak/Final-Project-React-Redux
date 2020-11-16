@@ -6,7 +6,7 @@ class Api::V1::ItemsController < ActionController::Base
   # item --> list --> user
 
   def index
-    user = User.find_by(username: "Erica")
+    user = User.find_by(username: params[:name])
     list = List.find_by(user_id: user.id)
     puts "--------------------------------------------"
     puts list.id
@@ -34,7 +34,7 @@ class Api::V1::ItemsController < ActionController::Base
   # 6. save it
   def create
     p = item_params
-    user = User.find_by(username: "Erica")
+    user = User.find_by(username: p[:name])
     list = List.find_by(user_id: user.id)
     item = Item.new(name: p[:name], is_complete: p[:is_complete], list_id: p[:list_id])
     item.save!

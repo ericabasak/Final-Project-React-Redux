@@ -1,5 +1,4 @@
 class Api::V1::SessionsController < ApplicationController
-  # skip_before_action :authorized, only: [:create]
 
   def create
     puts "----------params-------------"
@@ -7,7 +6,7 @@ class Api::V1::SessionsController < ApplicationController
     puts "------------params------------"
     # session[:test] = "Session test"
     @user = User.find_by(username: params[:username])
-    puts @user
+    # puts @user
     # todo add user.authenticate(params[:password]) bcrypt
     # if !@user.nil? && @user.authenticate(password)
     # if user && user.authenticate(params[:password])
