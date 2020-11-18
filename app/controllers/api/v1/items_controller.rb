@@ -33,10 +33,14 @@ class Api::V1::ItemsController < ApplicationController
   # 6. save it
   def create
     p = item_params
-    user = User.find_by(username: p[:name])
-    list = List.find_by(user_id: user.id)
+    puts "-------item params-------"
+    puts p
+    # user = User.find_by(username: p[:name])
+    list = List.find_by(user_id: @user.id)
     item = Item.new(name: p[:name], is_complete: p[:is_complete], list_id: p[:list_id])
     item.save!
+    puts "------item-----------"
+    puts item
     render json: item
   end
 

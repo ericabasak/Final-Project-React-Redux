@@ -59,8 +59,6 @@ class Api::V1::ListsController < ApplicationController
 
   private
 
-
-
   # params is a request from client, params is object
   def list_params
     params.require(:list).permit(:title, :description, :is_complete, :id)
