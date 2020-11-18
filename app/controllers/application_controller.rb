@@ -8,8 +8,8 @@ class ApplicationController < ActionController::API
   # a JWT token in the format of Bearer <Token>
   def auth_header
     # { Authorization: 'Bearer <token>' }
-    puts "------request------"
-    puts request.headers.first(50)
+    # puts "------request------"
+    # puts request.headers.first(50)
     request.headers['Authorization']
   end
 

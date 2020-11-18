@@ -8,13 +8,11 @@ class Api::V1::ItemsController < ActionController::Base
   def index
     user = User.find_by(username: params[:name])
     list = List.find_by(user_id: user.id)
-    puts "--------------------------------------------"
+    puts "----------------list.id----------------------------"
     puts list.id
-    puts "-------------------------------------------"
     item = Item.find_by(list_id: list.id)
-    puts "-----------------------------------------"
+    puts "-----------------item.name------------------------"
     puts item.name
-    puts "----------------------------------------"
     items = Item.where(:list_id => list.id)
     puts items
     # items = Items.all
@@ -45,10 +43,15 @@ class Api::V1::ItemsController < ActionController::Base
     # look up item
     # upate field
     # p = params.require(:item).permit(:is_complete, :id)
+    puts params
     p = item_params
-    item = Item.find(params[:list_id])
+    puts "-------item params----------"
+    puts p
+    item = Item.find(params[:id])
     item.update!(is_complete: p[:is_complete])
     item.save!
+    puts "---------item.save-------"
+    puts item
     render json: item
   end
   
@@ -64,7 +67,7 @@ class Api::V1::ItemsController < ActionController::Base
   private
 
   def item_params
-    params.require(:item).permit(:name, :is_complete, :list_id)
+    params.permit(:name, :is_complete, :list_id, :id)
   end
 
 end
