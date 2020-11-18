@@ -1,5 +1,6 @@
-class Api::V1::ItemsController < ActionController::Base
-  skip_before_action :verify_authenticity_token  
+class Api::V1::ItemsController < ApplicationController
+  before_action :authorized
+  # skip_before_action :verify_authenticity_token  
 
 
   # find items for a given user
@@ -67,7 +68,7 @@ class Api::V1::ItemsController < ActionController::Base
   private
 
   def item_params
-    params.permit(:name, :is_complete, :list_id, :id)
+    params.require(:item).permit(:name, :is_complete, :list_id, :id)
   end
 
 end
