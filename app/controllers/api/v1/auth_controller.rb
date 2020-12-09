@@ -1,34 +1,25 @@
 class Api::V1::AuthController < ApplicationController
 
   def create
-    puts "----------params-------------"
-    puts params
-    puts "------------params------------"
-    # session[:test] = "Session test"
     @user = User.find_by(username: params[:username])
-    # puts @user
-    # todo add user.authenticate(params[:password]) bcrypt
-    # if !@user.nil? && @user.authenticate(password)
-    # if user && user.authenticate(params[:password])
-    # if !@user.nil?
     if @user && @user.authenticate(params[:password])
-      # session[:user_id] = @user.id;
       token = encode_token({user_id: @user.id})
       render json: {user: @user, token: token}, status: 200
     else
-      render json: { errors: "Invalid credentials" }, status: 401
+      render json: { error: "Invalid credentials" }, status: 401
     end
   end
 
   def get_current_user
-    if logged_in?
-      render json: { user: current_user.user.serializer }, status: 200
+    if logged_in_user
+      puts @user
+      render json: {user: @user}, status: 200
     else
-      render json: { error: "No current user" }, status: 401
+      render json: {error: "not currently logged in"}, status: 401 
     end
+  
   end
 
-  # deletes or clears the session
   def destroy
     session.clear
     render json: { message: "Successfully logged out" }, status: 200

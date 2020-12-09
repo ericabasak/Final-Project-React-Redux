@@ -48,14 +48,17 @@ class Api::V1::ItemsController < ApplicationController
     # look up item
     # upate field
     # p = params.require(:item).permit(:is_complete, :id)
-    puts params
     p = item_params
     puts "-------item params----------"
     puts p
+    puts "-------item params----------"
     item = Item.find(params[:id])
+    puts "-------item----------"
+    puts item
+    puts "-------item----------"
     item.update!(is_complete: p[:is_complete])
     item.save!
-    puts "---------item.save-------"
+    puts "---------item-------"
     puts item
     render json: item
   end
