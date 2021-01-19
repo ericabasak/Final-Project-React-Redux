@@ -1,7 +1,6 @@
 require 'bcrypt'
 
 class Api::V1::UsersController < ApplicationController
-  # skip_before_action :verify_authenticity_token
 
   def index
     users = User.all
@@ -28,20 +27,6 @@ class Api::V1::UsersController < ApplicationController
       } 
     end
   end
-
-  # def login
-  #   puts "i want to login"
-  #   user = User.find_by(params[:id])
-  #   if user
-  #     session[:user_id] = user.id
-  #     puts "session - #{session[:user_id]}";
-  #     render json: user
-  #   else
-  #     render json: {
-  #       errors: "Login failed!"
-  #     }
-  #   end
-  # end
 
   private
 

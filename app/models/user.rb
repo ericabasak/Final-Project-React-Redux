@@ -4,6 +4,7 @@ class User < ApplicationRecord
   validates :username, uniqueness: true,  presence: true, length: { minimum: 4 }
   validates :email, uniqueness: true, presence: true
   validates :password, presence: true
+end
 
   def user_serializer
     {
@@ -24,4 +25,4 @@ class User < ApplicationRecord
   #   @password_digest = Password.create(new_password)
   # end
   
-end
+
