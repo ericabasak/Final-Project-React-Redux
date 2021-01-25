@@ -10,10 +10,9 @@ class Api::V1::ListsController < ApplicationController
     # value = @user.id
     lists = List.where(:user_id => @user.id)
     puts "--------------------------"
-    puts lists
+    puts lists.map{|e| e.title}
     puts "---------------------------"
     # all method returns all given lists for a user in the database
-    lists = List.all
     render json: lists
   end
 
