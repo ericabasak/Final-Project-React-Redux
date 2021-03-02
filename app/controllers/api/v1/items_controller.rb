@@ -1,10 +1,6 @@
 class Api::V1::ItemsController < ApplicationController
   before_action :authorized
-  # skip_before_action :verify_authenticity_token  
-
-
-  # find items for a given user
-  # item --> list --> user
+  # skip_before_action :verify_authenticity_token
 
   def index
     user = User.find_by(username: params[:name])
@@ -32,12 +28,12 @@ class Api::V1::ItemsController < ApplicationController
   # 5. associate item to list
   # 6. save it
   def create
-    p = item_params
-    puts "-------item params-------"
-    puts p
-    # user = User.find_by(username: p[:name])
-    list = List.find_by(user_id: @user.id)
-    item = Item.new(name: p[:name], is_complete: p[:is_complete], list_id: p[:list_id])
+    create_params = item_params
+    item = Item.new(
+      name: create_params[:name], 
+      is_complete: create_params[:is_complete], 
+      list_id: create_params[:list_id])
+
     item.save!
     puts "------item-----------"
     puts item
@@ -67,7 +63,7 @@ class Api::V1::ItemsController < ApplicationController
   private
 
   def item_params
-    params.require(:item).permit(:name, :is_complete, :list_id, :id)
+    params.require(:item).permit(:name, :is_complete, :list_id)
   end
 
 end
