@@ -48,20 +48,11 @@ class Api::V1::ListsController < ApplicationController
   def update
     # this method is editing/updating list
     p = list_params
-    puts "----------p-------"
-    puts p
-    puts "----------p-------"
     # finds the list with that id
     list = List.find(params[:id])
-    puts "----------list-------"
-    puts list
-    puts "----------list-------"
     # updating list attribute is_complete with checkbox
     list.update!(is_complete: p[:is_complete])
     list.save!
-    puts "----------list-------"
-    puts list
-    puts "----------list-------"
     render json: list
   end
 
