@@ -31,12 +31,10 @@ class Api::V1::ItemsController < ApplicationController
     create_params = item_params
     item = Item.new(
       name: create_params[:name], 
-      is_complete: create_params[:is_complete], 
+      is_complete: false, #create_params[:is_complete], 
       list_id: create_params[:list_id])
 
     item.save!
-    puts "------item-----------"
-    puts item
     render json: item
   end
 
