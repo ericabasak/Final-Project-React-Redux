@@ -15,14 +15,4 @@ end
   end
 
 
-  # include BCrypt
-
-  # def password
-  #   @password_digest ||= Password.new(@password_digest)
-  # end
-
-  # def password_digest=(new_password)
-  #   @password_digest = Password.create(new_password)
-  # end
-  
 

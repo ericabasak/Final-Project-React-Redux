@@ -1,6 +1,5 @@
 class Api::V1::ItemsController < ApplicationController
   before_action :authorized
-  # skip_before_action :verify_authenticity_token
 
   def index
     user = User.find_by(username: params[:name])

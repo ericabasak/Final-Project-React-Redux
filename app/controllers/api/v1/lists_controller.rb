@@ -3,12 +3,12 @@ class Api::V1::ListsController < ApplicationController
   # when user does login then the authorized method runs in the application controller
   
   def index
-    puts "***************************"
     puts @user
     # hash(:user_id => @user.id)
     # key = :user_id
     # value = @user.id
-    lists = List.where(:user_id => @user.id)
+    # find lists that match the user and sort through all lists in alphabetical order case insensitive
+    lists = List.where(:user_id => @user.id).sort_by {|l| l.title.downcase  }
     puts "--------------------------"
     puts lists.map{|e| e.title}
     puts "---------------------------"
@@ -18,8 +18,6 @@ class Api::V1::ListsController < ApplicationController
 
   def show
     # id = params[:id] 
-    # WHAT IS THE DIFFERENCE BETWEEN LIST_PARAMS & PARAMS?????????????
-    # IS PARAMS[:ID] ASSUMED FOR ALL STRONG PARAMS
     puts "--------params id----------"
     puts params[:id]
     # params[:id] is the id of the list
@@ -35,8 +33,6 @@ class Api::V1::ListsController < ApplicationController
 
   def create
     x = list_params
-    # why wouldn't you want List.create and then you can skip the save! down below?
-    # isnt' line 41 & 41 basically the same? both contain list_params more or less
     list = List.new(list_params)
     list = List.new(title: x[:title], description: x[:description], is_complete: x[:is_complete])
     # where is this user coming from? and the @user coming from ApplicationController
